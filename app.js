@@ -1,3 +1,69 @@
+
+// 1. IDENTITY CHECK (Must match GitHub JSON exactly)
+const MY_CLIENT_ID = "shori_magodo_001"; 
+
+// 2. MASTER LEDGER URL
+const MASTER_SWITCH_URL = "https://raw.githubusercontent.com/mohammedbabangida94-bit/Vigilant-Admin/refs/heads/main/sys_check_772.json";
+
+/**
+ * THE COMMAND CENTER CHECK
+ */
+async function validateAccess() {
+    try {
+        // We add a timestamp (?t=...) to the end of the URL to bypass the browser cache
+        const response = await fetch(`${MASTER_SWITCH_URL}?t=${new Date().getTime()}`);
+        
+        if (!response.ok) throw new Error("Could not reach GitHub");
+
+        const statusData = await response.json();
+        
+        console.log("Status Data Received:", statusData);
+        console.log("Checking status for:", MY_CLIENT_ID);
+
+        // 3. THE SWITCH TRIGGER
+        if (statusData[MY_CLIENT_ID] !== "active") {
+            console.warn("ACCESS SUSPENDED. Loading UI...");
+            renderRestrictedUI('yoruba');
+        } else {
+            console.log("ACCESS ACTIVE. Welcome to Amanat.");
+        }
+    } catch (error) {
+        console.error("System Check Failed:", error);
+        // Default to active so the app works if GitHub is down
+    }
+}
+
+/**
+ * THE RESTRICTED UI FUNCTION
+ */
+function renderRestrictedUI(lang) {
+    const labels = {
+        'english': { title: 'Access Restricted', msg: 'Security services for this zone have been suspended.', contact: 'Estate Office' },
+        'yoruba': { title: 'Ìhámọ́ Wo Inú Ibí', msg: 'A ti dádúró fún ìgbà díẹ̀.', contact: 'Alákòóso Ètò' },
+        'hausa': { title: 'An Takaita Shiga', msg: 'An dakatar da wannan akant dinka.', contact: 'mai kula da shirin' }
+    };
+
+    // Use English if the selected language isn't found
+    const ui = labels[lang] || labels['english'];
+
+    document.body.innerHTML = `
+        <div style="background-color: #000; color: #fff; height: 100vh; width: 100vw; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: sans-serif; text-align: center; border: 15px solid #d32f2f; box-sizing: border-box; position: fixed; top: 0; left: 0; z-index: 9999;">
+            <div style="font-size: 80px; color: #d32f2f; margin-bottom: 20px;">⚠️</div>
+            <h1 style="text-transform: uppercase; color: #d32f2f; margin: 0; font-size: 24px;">${ui.title}</h1>
+            <p style="font-size: 18px; max-width: 300px; margin: 20px;">${ui.msg}<br><br>Please contact <strong>${ui.contact}</strong>.</p>
+            <div style="background: #d32f2f; padding: 10px 20px; border-radius: 5px; font-weight: bold;">REF: ${MY_CLIENT_ID}</div>
+            <p style="margin-top: 40px; font-size: 10px; color: #444;">VIGILANTNG SECURITY SUITE</p>
+        </div>
+    `;
+    
+    // Stop the rest of the app from loading
+    window.stop(); 
+    throw new Error("Execution halted: Access Suspended.");
+}
+
+// 4. RUN THE CHECK
+validateAccess();
+
 document.addEventListener('DOMContentLoaded', () => {
     const sosButton = document.getElementById('sos-btn');
     const statusMsg = document.getElementById('statusMsg');
