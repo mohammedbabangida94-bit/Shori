@@ -13,7 +13,7 @@
     <link rel="icon" type="image/png" href="icon.png">
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="manifest" href="manifest.json">
-    <link rel="stylesheet" href="style.css">
+    
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
@@ -67,13 +67,28 @@
         <div id="statusMsg" style="font-weight: bold; margin-bottom: 20px;">Ready</div>
         
         <button id="sos-btn" class="sos-button">SOS</button>
+    <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px; font-weight: bold; color: #d32f2f;">
+            <input type="checkbox" id="stealthToggle" style="width: 20px; height: 20px;"> 🛡️ Stealth Mode
+    </label>
+    
+    <div class="settings-panel" style="margin-top: 30px; width: 90%; max-width: 400px; background: #ffffff; padding: 20px; border-radius: 15px; border: 2px solid #1a237e; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+    <h3 style="font-size: 1.1rem; color: #1a237e; margin-bottom: 15px;">Emergency Profile</h3>
+    
+    <div style="margin-bottom: 20px;">
+        <input type="text" id="contact1" placeholder="Primary Phone (e.g. +234...)" value="+234XXXXXXXXXX" style="display: block; margin: 10px auto; padding: 12px; width: 90%; border-radius: 8px; border: 1px solid #ccc; font-size: 1rem;">
+        <input type="text" id="contact2" placeholder="Secondary Phone" style="display: block; margin: 10px auto; padding: 12px; width: 90%; border-radius: 8px; border: 1px solid #ccc; font-size: 1rem;">
+    </div>
 
-        <div class="settings-panel" style="margin-top: 40px; text-align: center; background: #f5f5f5; padding: 15px; border-radius: 10px; border: 1px solid #ddd;">
-            <h3 style="font-size: 1rem; color: #333;">Emergency Contacts</h3>
-            <input type="text" id="contact1" placeholder="Contact 1 (e.g. +234...)" value="+234XXXXXXXXXX" style="display: block; margin: 5px auto; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-            <input type="text" id="contact2" placeholder="Contact 2" style="display: block; margin: 5px auto; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-            <p style="font-size: 0.7rem; color: #666;">Numbers are saved locally for privacy.</p>
-        </div>
+    <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+
+    <div style="text-align: left; padding: 0 10px;">
+        
+        <h3 style="font-size: 1rem; color: #333;">Medical Intelligence & Modes</h3>
+        <input type="text" id="bloodGroup" placeholder="Blood Group (e.g., O+)" style="display: block; margin: 10px 0; padding: 10px; width: 100%; border-radius: 5px; border: 1px solid #ddd;">
+        <input type="text" id="allergies" placeholder="Allergies (e.g., Nuts)" style="display: block; margin: 10px 0; padding: 10px; width: 100%; border-radius: 5px; border: 1px solid #ddd;">
+    </div>
+    <p style="font-size: 0.7rem; color: #666;">This data is sent to responders during an SOS.</p>
+</div>
     </main>
 
     <audio id="sirenAudio" src="siren.mp3" preload="auto" loop></audio>
