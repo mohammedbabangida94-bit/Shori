@@ -87,20 +87,19 @@
         <input type="text" id="bloodGroup" placeholder="Blood Group (e.g., O+)" style="display: block; margin: 10px 0; padding: 10px; width: 100%; border-radius: 5px; border: 1px solid #ddd;">
         <input type="text" id="allergies" placeholder="Allergies (e.g., Nuts)" style="display: block; margin: 10px 0; padding: 10px; width: 100%; border-radius: 5px; border: 1px solid #ddd;">
     </div>
-    <p style="font-size: 0.7rem; color: #666;">This data is sent to responders during an SOS.</p>
+    <footer style="margin-top: 50px; padding: 20px; text-align: center; font-size: 0.75rem; color: #777; line-height: 1.4;">
+    <p><strong>VigilantNG Privacy Commitment</strong></p>
+    <p>Your Medical Intelligence and Location data are stored <strong>locally</strong> on this device. VGN does not upload your health records to a central database unless an SOS is triggered.</p>
+    <p>© 2026 VigilantNG Security Suite. All Rights Reserved.</p>
+    <p style="text-decoration: underline; cursor: pointer;" onclick="alert('Data Privacy: LocalStorage encryption active. Location: GPS-only. No 3rd party sharing.')">View Data Protocols</p>
+</footer>
 </div>
     </main>
 
     <audio id="sirenAudio" src="siren.mp3" preload="auto" loop></audio>
 
     <script src="app.js"></script>
-
-<footer style="margin-top: 50px; padding: 20px; text-align: center; font-size: 0.75rem; color: #777; line-height: 1.4;">
-    <p><strong>VigilantNG Privacy Commitment</strong></p>
-    <p>Your Medical Intelligence and Location data are stored <strong>locally</strong> on this device. VGN does not upload your health records to a central database unless an SOS is triggered.</p>
-    <p>© 2026 VigilantNG Security Suite. All Rights Reserved.</p>
-    <p style="text-decoration: underline; cursor: pointer;" onclick="alert('Data Privacy: LocalStorage encryption active. Location: GPS-only. No 3rd party sharing.')">View Data Protocols</p>
-</footer>
+    
     
 </body>
 </html>
