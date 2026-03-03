@@ -22,16 +22,27 @@ const showSmsButton = (mapUrl = "") => {
 };
 
 // 3. ACCESS CONTROL
-async function validateAccess() {
+async function validateIndividualAccess(userId) {
     try {
-    const response = await fetch(`${MASTER_SWITCH_URL}?t=${new Date().getTime()}`);
-    if (!response.ok) throw new Error("Could not reach GitHub");
-    const statusData = await response.json();
-    if (statusData[MY_CLIENT_ID] !== "active") {
-        renderRestrictedUI('yoruba');
+        const response = await fetch(`${MASTER_SWITCH_URL}?t=${new Date().getTime()}`);
+        const statusData = await response.json();
+
+        // 1. Check the Corporate/Estate Switch FIRST
+        if (statusData[MY_CLIENT_ID] !== "active") {
+            console.warn("Estate-wide suspension active.");
+            renderRestrictedUI('yoruba'); 
+            return; 
+        }
+
+        // 2. If Estate is active, check the Individual Subscriber ID
+        if (statusData[userId] !== "active") {
+            console.warn(`User ${userId} is suspended.`);
+            renderRestrictedUI('yoruba');
+        } else {
+            console.log("System fully operational for user:", userId);
         }
     } catch (error) {
-    console.error("System Check Failed:", error);
+        console.error("Connection failed. System remains in Safe-Mode.");
     }
 }
 
