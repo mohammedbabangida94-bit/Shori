@@ -5,22 +5,31 @@ const MASTER_SWITCH_URL = "https://raw.githubusercontent.com/mohammedbabangida94
 // 2. THE MISSING TOOL: showSmsButton
 // Defined globally so finishSOS can find it.
 const showSmsButton = (mapUrl = "") => {
-    const statusMsg = document.getElementById('statusMsg');
-    const primaryNum = document.getElementById('contact1')?.value || "+234XXXXXXXXXX"; 
-    const blood = localStorage.getItem('vgn_blood') || "Unknown";
-    
-    const locationText = mapUrl ? ` My location: ${mapUrl}` : " (Location unavailable)";
-    const smsBody = `VGN EMERGENCY! Blood: ${blood}. I need help.${locationText}`;
-    const smsUrl = `sms:${primaryNum}?body=${encodeURIComponent(smsBody)}`;
+    // 1. Fetch the latest data from storage
+    const blood = localStorage.getItem('vgn_blood') || "Not Stated";
+    const allergies = localStorage.getItem('vgn_allergies') || "None Reported";
+    const history = localStorage.getItem('vgn_history') || "None";
+    const userId = localStorage.getItem('vgn_user_id') || "Guest";
 
-    statusMsg.innerHTML = `
-        <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 10px; width: 100%;">
-            <a href="${smsUrl}" style="background: #25D366; color: white; padding: 18px; border-radius: 12px; text-decoration: none; font-weight: bold; text-align: center; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);">📲 FI SMS RANSE NIYI</a>
-            <button onclick="window.stopAll()" style="background: #ff4444; color: white; padding: 15px; border-radius: 12px; border: none; font-weight: bold; cursor: pointer;">🔇 STOP SIREN & RESET</button>
-        </div>
+    // 2. Format the Message
+    // Note: We use %0A for a new line in SMS
+    const smsBody = `VGN EMERGENCY ALERT%0A` +
+                    `ID: ${userId}%0A` +
+                    `Blood: ${blood}%0A` +
+                    `Allergies: ${allergies}%0A` +
+                    `History: ${history}%0A` +
+                    `Location: ${mapUrl || "Searching..."}`;
+
+    const primaryNum = document.getElementById('contact1')?.value || "+234...";
+    const smsUrl = `sms:${primaryNum}?body=${encodeURIComponent(smsBody).replace(/%250A/g, '%0A')}`;
+
+    // 3. Render the Button
+    document.getElementById('statusMsg').innerHTML = `
+        <a href="${smsUrl}" style="background: #25D366; display:block; padding: 20px; color: white; border-radius: 12px; text-decoration: none; font-weight: bold;">
+           📲 ACTIVATE EMERGENCY SMS
+        </a>
     `;
 };
-
 // 3. ACCESS CONTROL
 async function validateIndividualAccess(userId) {
     try {
