@@ -83,11 +83,20 @@ const finishSOS = async () => {
         showSmsButton();
     });
 };
-
-// 7. STOP ALL
-window.stopAll = () => {
+ window.stopAll = () => {
     const siren = document.getElementById('sirenAudio');
-    if (siren) siren.pause();
+    
+    // 1. Kill the sound immediately
+    if (siren) {
+        siren.pause();
+        siren.currentTime = 0;
+    }
+
+    // 2. Kill vibration
+    if (navigator.vibrate) navigator.vibrate(0);
+
+    // 3. Refresh the entire app
+    // This resets isSent, the UI, and re-validates the GitHub ID
     location.reload();
 };
 
@@ -116,6 +125,34 @@ if (statusData[MY_CLIENT_ID] !== "active") {
     } catch (error) {
         console.warn("Connection error - proceeding with local data.");
     }
+
+    // B. SECOND: Validate subscription
+try {
+    const response = await fetch(`${MASTER_SWITCH_URL}?t=${new Date().getTime()}`);
+    const statusData = await response.json();
+    
+    // Check Master Estate Switch First
+    if (statusData[MY_CLIENT_ID] !== "active") {
+        console.error("Master Switch Suspended");
+        renderRestrictedUI('yoruba');
+        return;
+    }
+
+    // Check Individual User ID
+    if (statusData[savedID] !== "active") {
+        console.error("User ID Suspended:", savedID);
+        // If the ID they saved isn't 'active' in your JSON, log them out
+        renderRestrictedUI('yoruba');
+        return;
+    }
+    
+    // IF EVERYTHING IS OK:
+    console.log("Access Granted to:", savedID);
+    if (gate) gate.style.display = 'none'; // Hide the gate if it was open
+
+} catch (error) {
+    console.warn("Connection error - allowing local access.");
+}
 
     // Step C: Setup UI Elements
 const sosButton = document.getElementById('sos-btn');
