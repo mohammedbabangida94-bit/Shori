@@ -83,21 +83,30 @@ const finishSOS = async () => {
         showSmsButton();
     });
 };
- window.stopAll = () => {
-    const siren = document.getElementById('sirenAudio');
-    
-    // 1. Kill the sound immediately
-    if (siren) {
-        siren.pause();
-        siren.currentTime = 0;
+window.stopAll = () => {
+    // 1. Ask for confirmation first
+    const confirmReset = confirm("Ṣé o fẹ́ dá ìdágìrì dúró? \n(Do you want to stop the alarm?)");
+
+    if (confirmReset) {
+        const siren = document.getElementById('sirenAudio');
+        
+        // 2. Kill the sound and vibration immediately
+        if (siren) {
+            siren.pause();
+            siren.currentTime = 0;
+        }
+        if (navigator.vibrate) navigator.vibrate(0);
+
+        // 3. Clear UI variables
+        isSent = false;
+
+        // 4. Hard Reset
+        // This re-validates the ID against GitHub and cleans the UI
+        location.reload();
+    } else {
+        // User clicked 'Cancel', keep the alarm going
+        console.log("Reset cancelled by user. Alarm continuing.");
     }
-
-    // 2. Kill vibration
-    if (navigator.vibrate) navigator.vibrate(0);
-
-    // 3. Refresh the entire app
-    // This resets isSent, the UI, and re-validates the GitHub ID
-    location.reload();
 };
 
 // --- MAIN INITIALIZATION ---
