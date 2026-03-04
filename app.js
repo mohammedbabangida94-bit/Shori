@@ -107,9 +107,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         const response = await fetch(`${MASTER_SWITCH_URL}?t=${new Date().getTime()}`);
         const statusData = await response.json();
         
-        if (statusData[MY_CLIENT_ID] !== "active" || statusData[savedID] !== "active") {
-            renderRestrictedUI('yoruba');
-            return;
+        // To this (Temporary for testing):
+if (statusData[MY_CLIENT_ID] !== "active") {
+    console.log("Master Switch is:", statusData[MY_CLIENT_ID]);
+  // renderRestrictedUI('yoruba');
+           // return;
        }
     } catch (error) {
         console.warn("Connection error - proceeding with local data.");
