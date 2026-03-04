@@ -57,6 +57,15 @@
     </style>
     </head>
 <body>
+
+<div id="registration-gate" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:10000; flex-direction:column; align-items:center; justify-content:center; color:white; text-align:center; padding:20px; box-sizing:border-box;">
+    <h2 style="color:#d32f2f;">VIGILANTNG ACTIVATION</h2>
+    <p>Please enter your Subscriber ID to activate security services.</p>
+    <input type="text" id="vgn-id-input" placeholder="Enter ID (e.g. VGN-101)" style="padding:15px; width:80%; max-width:300px; border-radius:10px; border:none; margin-bottom:20px; font-size:1.2rem; text-align:center;">
+    <button onclick="activateApp()" style="background:#1a237e; color:white; padding:15px 40px; border:none; border-radius:10px; font-weight:bold; font-size:1rem;">ACTIVATE NOW</button>
+    <p style="margin-top:20px; font-size:0.8rem; color:#aaa;">Don't have an ID? Contact your Estate Office.</p>
+</div>
+
     <header style="text-align: center; padding: 20px;">
         <h1 style="color: #1a237e;">Shori</h1>
         <p>Abo To daju</p>
@@ -87,12 +96,7 @@
         <input type="text" id="bloodGroup" placeholder="Blood Group (e.g., O+)" style="display: block; margin: 10px 0; padding: 10px; width: 100%; border-radius: 5px; border: 1px solid #ddd;">
         <input type="text" id="allergies" placeholder="Allergies (e.g., Nuts)" style="display: block; margin: 10px 0; padding: 10px; width: 100%; border-radius: 5px; border: 1px solid #ddd;">
     </div>
-    <footer style="margin-top: 50px; padding: 20px; text-align: center; font-size: 0.75rem; color: #777; line-height: 1.4;">
-    <p><strong>VigilantNG Privacy Commitment</strong></p>
-    <p>Your Medical Intelligence and Location data are stored <strong>locally</strong> on this device. VGN does not upload your health records to a central database unless an SOS is triggered.</p>
-    <p>© 2026 VigilantNG Security Suite. All Rights Reserved.</p>
-    <p style="text-decoration: underline; cursor: pointer;" onclick="alert('Data Privacy: LocalStorage encryption active. Location: GPS-only. No 3rd party sharing.')">View Data Protocols</p>
-</footer>
+  
 </div>
     </main>
 
@@ -100,6 +104,12 @@
 
     <script src="app.js"></script>
     
+      <footer style="margin-top: 50px; padding: 20px; text-align: center; font-size: 0.75rem; color: #777; line-height: 1.4;">
+    <p><strong>VigilantNG Privacy Commitment</strong></p>
+    <p>Your Medical Intelligence and Location data are stored <strong>locally</strong> on this device. VGN does not upload your health records to a central database unless an SOS is triggered.</p>
+    <p>© 2026 VigilantNG Security Suite. All Rights Reserved.</p>
+    <p style="text-decoration: underline; cursor: pointer;" onclick="alert('Data Privacy: LocalStorage encryption active. Location: GPS-only. No 3rd party sharing.')">View Data Protocols</p>
+    </footer>
     
 </body>
 </html>
