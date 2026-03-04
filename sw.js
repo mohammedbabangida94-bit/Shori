@@ -1,3 +1,11 @@
+self.addEventListener('install', (event) => {
+    self.skipWaiting(); // Forces the new service worker to take over immediately
+});
+
+self.addEventListener('activate', (event) => {
+    event.waitUntil(clients.claim()); // Immediately controls all open tabs
+});
+
 const CACHE_NAME = 'shori-v1';
 const ASSETS_TO_CACHE = [
   './',
