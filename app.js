@@ -96,3 +96,44 @@ document.addEventListener('DOMContentLoaded', () => {
         bloodInput.addEventListener('input', () => localStorage.setItem('vgn_blood', bloodInput.value));
     }
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Grab UI Elements
+    const stealthToggle = document.getElementById('stealthToggle');
+    const bloodInput = document.getElementById('bloodGroup');
+    const allergiesInput = document.getElementById('allergies');
+    const siren = document.getElementById('sirenAudio');
+
+    // 2. Load Saved Data from LocalStorage
+    if(stealthToggle) {
+        stealthToggle.checked = localStorage.getItem('vgn_stealth_mode') === 'true';
+        stealthToggle.addEventListener('change', () => {
+            localStorage.setItem('vgn_stealth_mode', stealthToggle.checked);
+        });
+    }
+
+    if(bloodInput) {
+        bloodInput.value = localStorage.getItem('vgn_blood') || '';
+        bloodInput.addEventListener('input', () => {
+            localStorage.setItem('vgn_blood', bloodInput.value);
+        });
+    }
+
+    if(allergiesInput) {
+        allergiesInput.value = localStorage.getItem('vgn_allergies') || '';
+        allergiesInput.addEventListener('input', () => {
+            localStorage.setItem('vgn_allergies', allergiesInput.value);
+        });
+    }
+
+    // 3. The Stealth Siren Logic (Used inside your finishSOS)
+    window.playSiren = () => {
+        const isStealth = localStorage.getItem('vgn_stealth_mode') === 'true';
+        if (!isStealth && siren) {
+            siren.play().catch(e => console.log("Audio Blocked by Browser"));
+            if (navigator.vibrate) navigator.vibrate([500, 200, 500, 200, 500]);
+        } else {
+            console.log("Stealth Active: Siren & Vibration disabled.");
+        }
+    };
+});
